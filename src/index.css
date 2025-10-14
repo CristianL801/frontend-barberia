@@ -1,0 +1,31 @@
+:root {
+  font-family: "Poppins", sans-serif;
+  background-color: #f8f9fb;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* offset anchor targets so sticky header doesn't cover them */
+h1[id], h2[id], h3[id], h4[id], div[id] {
+  scroll-margin-top: 80px; /* adjust to header height */
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
