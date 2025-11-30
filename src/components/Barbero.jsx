@@ -15,7 +15,7 @@ function Barbero() {
     >
       <Group align="center" gap="xl">
         <Image
-          src="/imagenes/Perfil.png"
+          src="/Imagenes/Perfil.png"
           alt="Manuel Samur Barber"
           radius="md"
           width={180}
