@@ -11,7 +11,7 @@ import "./App.css";
 
 function App() {
   const [servicios, setServicios] = useState([]); 
-  const API_URL = "https://advanced-fidela-cristianl801-c89f2d83.koyeb.app/api";
+  const API_URL = "https://medieval-gillan-cristianl801-95f46287.koyeb.app/api"; 
   const [modoAdmin, setModoAdmin] = useState(false);
   const [modalServicio, setModalServicio] = useState(false);
   const [servicioEditando, setServicioEditando] = useState(null); 
