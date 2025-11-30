@@ -25,7 +25,7 @@ function HeaderBarberia() {
       }}
     >
       <h2 style={{ marginBottom: "5px" }}>M. S. Q Beauty Studio</h2>
-      <p style={{ margin: "0 0 15px 0" }}>📍 Calle 4, Pucón, Chile</p>
+      <p style={{ margin: "0 0 15px 0" }}>📍Calle 4, Pucón, Chile</p>
 
       <Button
         color="dark"

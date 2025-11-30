@@ -11,7 +11,7 @@ import "./App.css";
 
 function App() {
   const [servicios, setServicios] = useState([]); 
-  const API_URL = "http://127.0.0.1:8000/api"; 
+  const API_URL = "https://backend-barberia-production.up.railway.app/api"; 
   const [modoAdmin, setModoAdmin] = useState(false);
   const [modalServicio, setModalServicio] = useState(false);
   const [servicioEditando, setServicioEditando] = useState(null); 
