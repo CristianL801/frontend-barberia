@@ -8,11 +8,12 @@ function HeaderBarberia() {
   const autoplay = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }));
 
   const imagenes = [
-    "https://d1itoeljuz09pk.cloudfront.net/msqbeautystudio/gallery/IMG_2201.JPEG",
-    "https://d1itoeljuz09pk.cloudfront.net/msqbeautystudio/gallery/IMG_2148.JPEG",
-    "https://d1itoeljuz09pk.cloudfront.net/msqbeautystudio/gallery/IMG_2123.JPEG",
-    "https://d1itoeljuz09pk.cloudfront.net/msqbeautystudio/gallery/IMG_0813.JPEG",
-    "https://d1itoeljuz09pk.cloudfront.net/msqbeautystudio/gallery/IMG_1842.JPEG",
+    "/Imagenes/Carrusel0.JPG",
+    "/Imagenes/Carrusel1.png",
+    "/Imagenes/Carrusel2.png",
+    "/Imagenes/Carrusel3.JPEG",
+    "/Imagenes/Carrusel4.JPEG",
+    "/Imagenes/Carrusel5.JPEG",
   ];
 
   return (

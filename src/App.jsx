@@ -1,5 +1,4 @@
-import { useState } from "react";
-import cortesIniciales from "./data/cortesIniciales";
+import { useState, useEffect } from "react";
 import TarjetaCorte from "./components/TarjetaCorte";
 import HeaderBarberia from "./components/HeaderBarberia";
 import SobreBarberia from "./components/SobreBarberia";
@@ -11,7 +10,8 @@ import Nav from "./components/Nav";
 import "./App.css";
 
 function App() {
-  const [servicios, setServicios] = useState(cortesIniciales);
+  const [servicios, setServicios] = useState([]); 
+  const API_URL = "http://127.0.0.1:8000/api"; 
   const [modoAdmin, setModoAdmin] = useState(false);
   const [modalServicio, setModalServicio] = useState(false);
   const [servicioEditando, setServicioEditando] = useState(null); 
@@ -19,24 +19,61 @@ function App() {
   const [servicioReservado, setServicioReservado] = useState(null);
   const [reservas, setReservas] = useState([]); 
 
-  
-function crearServicio(nuevo) {
-  let nuevoServicio = nuevo;
-  nuevoServicio.id = Date.now();
-  let copia = servicios.concat(nuevoServicio);
-  setServicios(copia);
-}
+ 
+  useEffect(() => {
+    cargarServicios();
+    cargarReservas();
+  }, []);
 
-  function editarServicio(id, datosActualizados) {
-    setServicios(
-      servicios.map((srv) =>
-        srv.id === id ? { ...srv, ...datosActualizados } : srv
-      )
-    );
+  const cargarServicios = async () => {
+    try {
+      const respuesta = await fetch(`${API_URL}/services`);
+      const datos = await respuesta.json();
+      setServicios(datos);
+    } catch (error) {
+      console.error("Error conectando con el backend:", error);
+    }
+  };
+
+  const cargarReservas = async () => {
+    try {
+      const respuesta = await fetch(`${API_URL}/reservations`);
+      const datos = await respuesta.json();
+      setReservas(datos);
+    } catch (error) {
+      console.error("Error cargando reservas:", error);
+    }
+  };
+  
+async function crearServicio(nuevo) {
+    await fetch(API_URL + "/services", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(nuevo),
+    });
+    
+    alert("Servicio creado");
+    cargarServicios();
   }
 
-  function eliminarServicio(id) {
-    setServicios(servicios.filter((srv) => srv.id !== id));
+  async function editarServicio(id, datosActualizados) {
+    await fetch(API_URL + "/services/" + id, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datosActualizados),
+    });
+
+    alert("Servicio actualizado");
+    cargarServicios();
+  }
+
+  async function eliminarServicio(id) {
+    if(!window.confirm("¿Seguro que quieres borrar este servicio?")) return;
+
+    await fetch(`${API_URL}/services/${id}`, {
+      method: "DELETE",
+    });
+    cargarServicios();
   }
 
   
@@ -57,12 +94,32 @@ function crearServicio(nuevo) {
   }
 
   
-function guardarReserva(reserva) {
-  const copia = reservas.slice(); 
-  copia.push(reserva);            
-  setReservas(copia);             
-}
+async function guardarReserva(datosFormulario) {
+    const nuevaReserva = {
+      nombre_cliente: datosFormulario.nombre,
+      telefono: datosFormulario.telefono,
+      fecha_cita: datosFormulario.hora,
+      servicio: servicioReservado.nombre, 
+      comentarios: datosFormulario.correo,
+    };
 
+    try {
+      const respuesta = await fetch(API_URL + "/reservations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(nuevaReserva),
+      });
+
+      if (respuesta.ok) {
+        alert("Reserva enviada con éxito");
+        cargarReservas();
+      } else {
+        alert("Hubo un error al guardar");
+      }
+    } catch (error) {
+      alert("Error de conexión");
+    }
+  }
 
   return (
     <div className="App">
@@ -130,12 +187,14 @@ function guardarReserva(reserva) {
       {modoAdmin && reservas.length > 0 && (
         <div className="panel-reservas">
           <h2>Reservas guardadas</h2>
-          <ul>
+            <ul>
             {reservas.map((r) => (
-              <li key={r.id}>
-                <strong>Nombre: {r.nombre}</strong> — {r.servicio} — {r.hora}
-                <br />  <strong>Correo electrónico:</strong> {r.correo} |{" "}
-                <strong>Teléfono:</strong> {r.telefono}
+              <li key={r.id} style={{ marginBottom: "10px", borderBottom: "1px solid #ccc", paddingBottom: "5px" }}>
+                <strong>Cliente:</strong> {r.nombre_cliente} <br/>
+                <strong>Fecha/Hora:</strong> {r.fecha_cita} <br/>
+                <strong>Servicio:</strong> {r.servicio} <br/>
+                <strong>Teléfono:</strong> {r.telefono} <br/>
+                {r.comentarios && <span><strong>Nota:</strong> {r.comentarios}</span>}
               </li>
             ))}
           </ul>

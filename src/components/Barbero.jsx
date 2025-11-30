@@ -15,7 +15,7 @@ function Barbero() {
     >
       <Group align="center" gap="xl">
         <Image
-          src="https://d1itoeljuz09pk.cloudfront.net/msqbeautystudio/collaborators/3e82c6f9-8581-46ee-afe4-249c95bf1ffe.jpg"
+          src="/imagenes/Perfil.png"
           alt="Manuel Samur Barber"
           radius="md"
           width={180}

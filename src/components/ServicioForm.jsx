@@ -1,28 +1,26 @@
 import { useEffect, useState } from "react";
 import { Modal, TextInput, Textarea, Button } from "@mantine/core";
 
-function ServicioForm({ opened, onClose, onSubmit, servicioEditado }) {
+function ServicioForm({ opened, onClose, onSubmit, servicio }) {
   const [form, setForm] = useState({
     nombre: "",
     precio: "",
     duracion: "",
     descripcion: "",
-    imagen: "",
   });
 
   useEffect(() => {
-    if (servicioEditado) {
-      setForm(servicioEditado);
+    if (servicio) {
+      setForm(servicio);
     } else {
       setForm({
         nombre: "",
         precio: "",
         duracion: "",
         descripcion: "",
-        imagen: "",
       });
     }
-  }, [servicioEditado, opened]);
+  }, [servicio, opened]);
 
   function manejarCambio(evento) {
     const campo = evento.target.name;
@@ -46,7 +44,7 @@ function ServicioForm({ opened, onClose, onSubmit, servicioEditado }) {
     <Modal
       opened={opened}
       onClose={onClose}
-      title={servicioEditado ? "Editar servicio" : "Nuevo servicio"}
+      title={servicio ? "Editar servicio" : "Nuevo servicio"}
       centered
     >
       <TextInput
@@ -79,7 +77,7 @@ function ServicioForm({ opened, onClose, onSubmit, servicioEditado }) {
         required
       />
       <Button fullWidth mt="md" onClick={enviarFormulario} color="dark">
-        {servicioEditado ? "Guardar cambios" : "Agregar servicio"}
+        {servicio ? "Guardar cambios" : "Agregar servicio"}
       </Button>
     </Modal>
   );
